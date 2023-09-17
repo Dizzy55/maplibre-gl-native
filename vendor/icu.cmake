@@ -39,7 +39,8 @@ endif()
 
 target_include_directories(
     mbgl-vendor-icu SYSTEM
-    PUBLIC ${CMAKE_CURRENT_LIST_DIR}/icu/include
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/icu/include>
 )
 
 set_property(TARGET mbgl-vendor-icu PROPERTY FOLDER Core)

@@ -310,6 +310,24 @@ install(TARGETS qmaplibregl
         PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/QMapLibreGL"
 )
 
+# Append "mbgl-vendor-icu" library to "QMapLibreGLTargets" package
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    if(MBGL_QT_WITH_INTERNAL_ICU)
+        if(MBGL_QT_STATIC)
+            install(TARGETS mbgl-vendor-icu
+                    EXPORT QMapLibreGLTargets
+                    # Explicit set of DESTINATION is needed for older CMake versions.
+                    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+                    FRAMEWORK DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+                    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+                    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+                    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+                    PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/mbgl-vendor-icu"
+            )
+        endif()
+    endif()
+endif()
+
 if(NOT MBGL_QT_LIBRARY_ONLY)
     add_executable(
         mbgl-qt
